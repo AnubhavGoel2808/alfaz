@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 function LoginForm(props) {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      if (user) history.push("/interests");
+      if (user) props.history.push("/interests");
     });
   }, []);
   const onGoogleLogin = () => {
