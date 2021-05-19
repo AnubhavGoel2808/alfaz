@@ -2,9 +2,18 @@ import React ,{Component, useEffect} from 'react'
 import Like from './like'
 import '../style/POST.css';
  class Post extends Component{
-        state={
+    constructor(props){
+        super(props);
+        
+        this.state={
+            name:props.nameData,
+            src:props.audioUrl,
             play:false
         }
+        console.log(this.state)
+    
+    }  
+    
 
      audio = new Audio('https://www.computerhope.com/jargon/m/example.mp3')
     
@@ -12,6 +21,7 @@ import '../style/POST.css';
         this.setState({ play: !this.state.play }, () => {
           this.state.play ? this.audio.play() : this.audio.pause();
         });
+        this.audio.loop=true;
       }
       render(){
 
@@ -19,7 +29,7 @@ import '../style/POST.css';
         return (
       
        
-            <body>
+            <div class="post">
             <div class="mainmedia">
                 <button class="playpause" onClick={this.togglePlay}>{this.state.play ? 'sound off' : 'sound on'}</button>
             <div class="container-audio">
@@ -28,7 +38,7 @@ import '../style/POST.css';
              </img>
             <div class="check">
            
-            <p>Moksh</p>
+            <p>{this.state.name}</p>
             <p>this is sample </p>
              </div>
            {/* // <audio src="https://www.computerhope.com/jargon/m/example.mp3" id="player" loop controls ></audio> */}
@@ -94,9 +104,11 @@ import '../style/POST.css';
             
         </div>
         <Like></Like>
+        
+        
         {/* <button class="like-btn"> Like </button> */}
         </div>
-        </body>
+        </div>
         )
     }
 }

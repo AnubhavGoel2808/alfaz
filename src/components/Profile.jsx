@@ -7,58 +7,58 @@ import FigureCaption from 'react-bootstrap/esm/FigureCaption';
 import Post from './post'
 import Popup from './popup'
 class Profile extends React.Component{
-    state = {
-        isOpen:false,
-        isUser:false,
-        alreadyFollow:false,
-        audio: [{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}
-        ,{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"},
-        { src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}],
-        userDetails: {
-           
-            image:'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png'
-           }
+  constructor(props){
+    super(props);
+    this.state = {
+      isOpen:false,
+      isUser:false,
+      alreadyFollow:false,
+      audio: [{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}
+      ,{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"},
+      { src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}],
+      userDetails: {
+         
+          image:'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png'
+         }
+    }
+    this.fetchPosts =  () => {
+      db.collection("post").where("handle", "==", "sal_vat_ion")
+      .onSnapshot((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            
+            this.state.audio.push({
+              src:"https://www.computerhope.com/jargon/m/example.mp3",
+              description:doc.data().description
+            })
+            
+          });
+      });
+      console.log("arr");        
+      console.log(this.state);
+    }
+    this.fetchUserDetails =  () => {
+      db.collection("user").where("email", "==", "xyz@gmail.com")
+      .onSnapshot((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.setState({name:doc.data().name});
+              this.state.userDetails.followers=doc.data().followers_count;
+              this.state.userDetails.following=(doc.data().following_count);
+              this.state.userDetails.email=(doc.data().email);
+              this.state.userDetails.name=doc.data().name;
+              this.state.userDetails.handle=doc.data().handle;
+          });
+      });
+  
+    }
+  } 
+ 
+    
+     componentWillMount() {
+         this.fetchUserDetails()
+         this.fetchPosts()
       }
     
-      componentWillMount() {
-        this.fetchUserDetails()
-        this.fetchPosts()
-      }
-    
-      fetchPosts = async () => {
-        const temp=[...this.state.audio];
-        db.collection("post").where("handle", "==", "sal_vat_ion")
-        .onSnapshot((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              
-              temp.push({
-                src:"https://www.computerhope.com/jargon/m/example.mp3",
-                description:doc.data().description
-              })
-              
-              console.log(temp);
-              this.setState({
-                audio:temp,
-              })
-            });
-        });
-        console.log("arr");        
-        console.log(this.state);
-      }
-      fetchUserDetails = async () => {
-        db.collection("user").where("email", "==", "xyz@gmail.com")
-        .onSnapshot((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              this.setState({name:doc.data().name});
-                this.state.userDetails.followers=doc.data().followers_count;
-                this.state.userDetails.following=(doc.data().following_count);
-                this.state.userDetails.email=(doc.data().email);
-                this.state.userDetails.name=doc.data().name;
-                this.state.userDetails.handle=doc.data().handle;
-            });
-        });
-    
-      }
+      
       handleSignout = async () => {
         try {
           auth
@@ -73,8 +73,7 @@ class Profile extends React.Component{
       }
 
     render() {
-      this.fetchUserDetails();
-
+      
         const { audio, userDetails } = this.state
        
         return (
@@ -141,14 +140,11 @@ class Profile extends React.Component{
              </section>
              <div >
                <div className='posts'>
-                <Post nameData={this.state.userDetails.name}></Post>
-                <Post nameData="abc"></Post>
-                <Post nameData="abc"></Post>
-                <Post nameData="abc"></Post>
+                <Post nameData="abc" audioUrl={this.state.audio[2].src}></Post>
+                <Post nameData={this.state.userDetails.name} audioUrl={this.state.audio[2].src}></Post>
+                <Post nameData={this.state.userDetails.name} audioUrl={this.state.audio[2].src}></Post>
+                <Post nameData={this.state.userDetails.name} audioUrl={this.state.audio[2].src}></Post>
                </div>
-   
-
-         
           </div>
                 </div>
            

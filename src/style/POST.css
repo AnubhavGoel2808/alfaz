@@ -1,10 +1,8 @@
 
-body {
-    
+.post{
     background-color: #2d3436;
-    background-image: linear-gradient(315deg, #2d3436 10%, #000000 70%);
-    text-align:center;
-    color:cyan;
+    background-image: linear-gradient(305deg, #2d3436 0%, #000000 30%);
+    border-radius: 50px;
 }
 .mainmedia{
     display: flex;
@@ -20,11 +18,9 @@ body {
 }
 .container-audio {
     width: 66%;
-    height: auto;
+    height: 100%;
     padding: 20px;
     border-radius: 20px;
-    background-color: #2d3436;
-    background-image: linear-gradient(315deg, #2d3436 0%, #000000 30%);
     margin: 0px auto ;
     overflow: hidden;
 }
@@ -67,7 +63,7 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
 }
     .animate .colum1 .row {
         -webkit-animation: Rofa 10s infinite ease-in-out;
-    animation: Rofa 10s infinite ease-in-out;
+    animation: wave 10s infinite ease-in-out;
         animation-play-state: initial;
     }
 
@@ -132,7 +128,7 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
     animation-delay: 1.40s;
 }
 
-@keyframes Rofa {
+@keyframes wave{
     0% {
         height: 0%;
         -webkit-transform: translatey(0);
