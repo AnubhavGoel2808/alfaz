@@ -19,7 +19,8 @@ class Profile extends React.Component{
       userDetails: {
          
           image:'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png'
-         }
+         },
+      users:[]
     }
     this.fetchPosts =  () => {
       db.collection("post").where("handle", "==", "sal_vat_ion")
@@ -33,32 +34,43 @@ class Profile extends React.Component{
             
           });
       });
-      console.log("arr");        
-      console.log(this.state);
+      
     }
-    this.fetchUserDetails =  () => {
-      db.collection("user").where("email", "==", "xyz@gmail.com")
-      .onSnapshot((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            this.setState({name:doc.data().name});
-              this.state.userDetails.followers=doc.data().followers_count;
-              this.state.userDetails.following=(doc.data().following_count);
-              this.state.userDetails.email=(doc.data().email);
-              this.state.userDetails.name=doc.data().name;
-              this.state.userDetails.handle=doc.data().handle;
-          });
-      });
-  
-    }
+   
   } 
  
     
      componentWillMount() {
-         this.fetchUserDetails()
-         this.fetchPosts()
+      
+      db.collection("user").where("name","==","Moksh")
+      .get().then(querySnapshot => {
+        querySnapshot.forEach((doc)=>{
+          console.log(doc.data());
+          this.setState({
+            name: doc.data().name,
+            handle:doc.data().handle,
+            follower:doc.data().followers_count,
+            following:doc.data().following_count
+          })
+        })
+        
+        console.log("4");
+       
+         })
+    //   const docRef=db.collection("user").where("name","==","Moksh");
+    //   docRef.get().then((doc) => {
+    //     if (doc.exists) {
+    //         console.log("Document data:", doc.data());
+    //     } else {
+    //         // doc.data() will be undefined in this case
+    //         console.log("No such document!");
+    //     }
+    // }).catch((error) => {
+    //     console.log("Error getting document:", error);
+    // });
+
       }
     
-      
       handleSignout = async () => {
         try {
           auth
@@ -73,14 +85,16 @@ class Profile extends React.Component{
       }
 
     render() {
-      
-        const { audio, userDetails } = this.state
-       
+        if(this.state.name== undefined )
+          return null
+    
         return (
+
           <div className='main'>
+            
             <section className='intro'>
             <div>
-                  <h1>{this.state.userDetails.handle}</h1>
+                  <h1>{this.state.handle}</h1>
                   
                     <button class={!this.state.alreadyFollow?"followToggle":"unfollow"} onClick={(e)=>{
                         //{this.state.alreadyFollow ? alert('Are YOu sure?'):alert("you started following") }
@@ -97,27 +111,31 @@ class Profile extends React.Component{
             <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg" className='avatar' alt={this.state.userDetails.name} >
              </img>
              <figcaption className="figure-caption text-center" class="caption">
-                {this.state.userDetails.name}
+                {this.state.name}
               </figcaption>
              
              </figure>
              </section>
             <section className='card1' >
               <div class="prp">
+                
+            
+                
                 <ul>
                   <li>post</li>
                   <li>{this.state.audio.length}</li>
                 </ul>
-                
+                  
                 <ul>
                   <li>followers</li>
-                  <li>{this.state.userDetails.followers}</li>
+                  <li>{this.state.follower}</li>
                 </ul>
                 
                 <ul>
                   <li>following</li>
-                  <li>{this.state.userDetails.following}</li>
+                  <li>{this.state.following}</li>
                 </ul>
+                
                 </div>
                 <div class="options">
                  <button class='btn' style={{color:'cyan'}} onClick={this.togglePopup}>Edit</button>   
@@ -140,13 +158,13 @@ class Profile extends React.Component{
              </section>
              <div >
                <div className='posts'>
-                <Post nameData="abc" audioUrl={this.state.audio[2].src}></Post>
-                <Post nameData={this.state.userDetails.name} audioUrl={this.state.audio[2].src}></Post>
-                <Post nameData={this.state.userDetails.name} audioUrl={this.state.audio[2].src}></Post>
-                <Post nameData={this.state.userDetails.name} audioUrl={this.state.audio[2].src}></Post>
+                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
+                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
+                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
+                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
                </div>
-          </div>
-                </div>
+              </div>
+         </div>
            
         
         )

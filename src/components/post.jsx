@@ -5,12 +5,15 @@ import '../style/POST.css';
     constructor(props){
         super(props);
         
+            const {nameData}=props;
+            console.log(nameData);
         this.state={
-            name:props.nameData,
+            name:nameData,
             src:props.audioUrl,
             play:false
         }
-        console.log(this.state)
+        console.log("9");
+        console.log(this.state);
     
     }  
     
@@ -21,14 +24,14 @@ import '../style/POST.css';
         this.setState({ play: !this.state.play }, () => {
           this.state.play ? this.audio.play() : this.audio.pause();
         });
-        this.audio.loop=true;
+        this.audio.loop=false;
       }
       render(){
 
-      
+      console.log("post rendered")
         return (
-      
-       
+            
+            
             <div class="post">
             <div class="mainmedia">
                 <button class="playpause" onClick={this.togglePlay}>{this.state.play ? 'sound off' : 'sound on'}</button>
