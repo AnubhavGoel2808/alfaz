@@ -9,33 +9,20 @@ import Popup from './popup'
 class Profile extends React.Component{
   constructor(props){
     super(props);
+    console.log(this.props);
     this.state = {
       isOpen:false,
       isUser:false,
       alreadyFollow:false,
-      audio: [{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}
-      ,{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"},
-      { src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}],
+      audio:[],
+      // audio: [{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}
+      //         ,{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"},],
       userDetails: {
-         
           image:'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png'
          },
       users:[]
     }
-    this.fetchPosts =  () => {
-      db.collection("post").where("handle", "==", "sal_vat_ion")
-      .onSnapshot((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            
-            this.state.audio.push({
-              src:"https://www.computerhope.com/jargon/m/example.mp3",
-              description:doc.data().description
-            })
-            
-          });
-      });
-      
-    }
+   
    
   } 
  
@@ -45,7 +32,6 @@ class Profile extends React.Component{
       db.collection("user").where("name","==","Moksh")
       .get().then(querySnapshot => {
         querySnapshot.forEach((doc)=>{
-          console.log(doc.data());
           this.setState({
             name: doc.data().name,
             handle:doc.data().handle,
@@ -57,18 +43,33 @@ class Profile extends React.Component{
         console.log("4");
        
          })
-    //   const docRef=db.collection("user").where("name","==","Moksh");
-    //   docRef.get().then((doc) => {
-    //     if (doc.exists) {
-    //         console.log("Document data:", doc.data());
-    //     } else {
-    //         // doc.data() will be undefined in this case
-    //         console.log("No such document!");
-    //     }
-    // }).catch((error) => {
-    //     console.log("Error getting document:", error);
-    // });
-
+         const temp = [];
+         //console.log(temp);         
+         db.collection("post").where("handle", "==", "sal_vat_ion")
+         .onSnapshot((querySnapshot) => {
+             querySnapshot.forEach((doc) => {
+               this.setState({
+                audio:[...this.state.audio, "https://www.computerhope.com/jargon/m/example.mp3"],
+               })
+              
+             });
+         });
+         
+         console.log(temp);
+         var url_string = window.location;
+         var url = new URL(url_string);
+         var name = url.searchParams.get("name");
+         
+         if(name != null ){
+            this.setState({
+              isUser:false
+            })
+         }
+         else{
+          this.setState({
+            isUser:true
+          })
+         }
       }
     
       handleSignout = async () => {
@@ -85,9 +86,10 @@ class Profile extends React.Component{
       }
 
     render() {
-        if(this.state.name== undefined )
-          return null
-    
+      console.log(this.state)
+        // if(this.state.name== undefined || this.state.audio == null )
+        //       return null
+        
         return (
 
           <div className='main'>
@@ -96,7 +98,9 @@ class Profile extends React.Component{
             <div>
                   <h1>{this.state.handle}</h1>
                   
-                    <button class={!this.state.alreadyFollow?"followToggle":"unfollow"} onClick={(e)=>{
+                    <button style={{
+                      display:(this.state.isUser ? "none" : "inline" )
+                    }}class={!this.state.alreadyFollow?"followToggle":"unfollow"} onClick={(e)=>{
                         //{this.state.alreadyFollow ? alert('Are YOu sure?'):alert("you started following") }
                         this.setState({
                           alreadyFollow: !this.state.alreadyFollow,
@@ -104,6 +108,7 @@ class Profile extends React.Component{
                         })
                         
                     }}>{this.state.alreadyFollow ? 'Unfollow' : 'Follow'}</button>
+                  
             </div>
 
             <figure>
@@ -158,10 +163,8 @@ class Profile extends React.Component{
              </section>
              <div >
                <div className='posts'>
-                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
-                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
-                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
-                <Post nameData={this.state.name} audioUrl={this.state.audio[2].src}></Post>
+                 <br></br>
+                <Post nameData={this.state.name} audioUrl={this.state.audio[0]} callingSelf="true"></Post><br></br>
                </div>
               </div>
          </div>

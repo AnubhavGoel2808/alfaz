@@ -15,7 +15,9 @@ class Like extends Component {
   return (
     <svg
       onClick={() => {
-        this.state.toggle=true;
+        this.setState({
+          toggle:!this.state.toggle
+        })
         
       }}
       xmlns="http://www.w3.org/2000/svg"

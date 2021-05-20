@@ -2,7 +2,8 @@
 .main{
     /* background-image: linear-gradient(315deg, #537895 0%, #09203f 74%);
     color: #64ffda; */
-    height:100%;
+    width:100vw;
+    height:100vh;
     
     color: #64ffda;
     padding-left: 10%;
@@ -52,7 +53,7 @@ ul{
    border-radius: 50px ;
    background-color: #2d3436;
    background-image: linear-gradient(315deg, #2d3436 0%, #000000 30%);
-    align-content: center;
+   align-content: center;
    
 }
 .followToggle{
@@ -95,10 +96,9 @@ figure{
     flex-direction: column;
     justify-content: space-around;
     align-content: center;
-    
     width: 100%;
 }
-input:last-of-type{
+input[type="submit"]{
     width: 20%;
     background-color: #bf3a30;
     background-image: linear-gradient(315deg, #bf3a30 0%, #864ba2 74%);
