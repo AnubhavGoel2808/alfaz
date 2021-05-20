@@ -51,7 +51,6 @@ class Profile extends React.Component{
                this.setState({
                 audio:[...this.state.audio, "https://www.computerhope.com/jargon/m/example.mp3"],
                })
-              
              });
          });
          
@@ -162,11 +161,13 @@ class Profile extends React.Component{
             
              </section>
              <div >
+               {this.state.audio.map((url)=>(
                <div className='posts'>
                  <br></br>
-                <Post nameData={this.state.name} audioUrl={this.state.audio[0]} callingSelf="true"></Post><br></br>
+                <Post nameData={this.state.name} audioUrl={url} callingSelf="true"></Post><br></br>
                </div>
-              </div>
+               ))} 
+    </div>
          </div>
            
         
