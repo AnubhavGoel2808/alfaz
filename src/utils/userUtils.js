@@ -46,10 +46,10 @@ export function createUser(userHandle, selectedInterests) {
   const batch = db.batch();
 
   const uRef = db.collection("user").doc(uid);
-  const hRef = db.collectionGroup("user").doc(userHandle);
+  //const hRef = db.collection("handles").doc(userHandle);
   console.log(uRef);
   batch.set(uRef, userDoc);
-batch.set(hRef,{uid:uid})
+//batch.set(hRef,{uid:uid})
   console.log(batch);
   batch.commit();
 }

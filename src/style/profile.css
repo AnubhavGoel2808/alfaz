@@ -10,6 +10,7 @@
     padding-right: 10%;
 }
 p{
+    text-align: center;
     color: powderblue;
 }
 /* body {
@@ -23,7 +24,7 @@ p{
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    padding-top: 5%;
+   
     padding-bottom: 5%;
 }
 h1{
@@ -94,7 +95,7 @@ figure{
 .EditForm{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-content: center;
     width: 100%;
 }

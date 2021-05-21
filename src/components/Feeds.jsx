@@ -1,44 +1,51 @@
-import React from 'react'
-import { Component } from 'react';
-import {db} from '../firebase'
+import React, { useEffect, useState } from "react";
+import AddPost from "./AddPost";
+import Navbar from "./Navbar";
 import Post from './post'
-class Feed extends Component{
+import {db} from '../firebase'
+import { Component } from "react";
+class Feeds extends Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state={
       audio:[]
     }
   }
   componentDidMount(){
-    db.collection("post")
-    .get().then(querySnapshot=>(
-      querySnapshot.forEach(doc=>(
-        this.setState({
-          handle:doc.data().handle,
-          audio:[...this.state.audio,"https://www.computerhope.com/jargon/m/example.mp3"]
-        })
-      ))
-    ))
-  }
-  handleProfile=()=>{
-    window.open("/profile","_self")
+        db.collection("post")
+    .onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          this.setState({
+           audio:[...this.state.audio,{
+             url:doc.data().audio,
+             handle:doc.data().handle,
+             des:doc.data().description
+           }],
+          })
+        });
+    });
   }
   render(){
-    return(
-      <div class="feedPost" style={{
-        width:100+"vw",
-        height:100+"vh",
-        color:"cyan"
+  return (
+    <div style={{
+      height:"100vh"
+    }}>
+      <Navbar></Navbar>
+      <div style={{
+        paddingLeft:"10%",
+        paddingRight:"10%"
       }}>
-        <button onClick={this.handleProfile}></button>
-        {this.state.audio.map((url)=>(
+      <AddPost ></AddPost>
+      {this.state.audio.map((data)=>(
                <div className='posts'>
                  <br></br>
-                <Post nameData={this.state.handle} audioUrl={url} calligself="false"></Post><br></br>
+                <Post nameData={data.handle} audioUrl={data.url} description={data.des} ></Post><br></br>
                </div>
                ))} 
-      </div>
-    )
-  }
+     </div>
+    </div>
+  );
 }
-export default Feed
+}
+export default Feeds;

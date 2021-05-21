@@ -72,11 +72,18 @@ function LoginForm(props) {
           <Form onSubmit={handleOnSubmit}>
             <Form.Group id="email">
               <Form.Label >Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Control type="email" ref={emailRef} required style={{
+                backgroundColor:"transparent",
+                borderColor:"cyan"
+              }} />
             </Form.Group>
             <Form.Group id="password">
               <Form.Label className="mt-2">Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Control type="password" ref={passwordRef} required style={{
+                backgroundColor:"transparent",
+                borderColor:"cyan"
+                
+              }} />
             </Form.Group>
             <Button className="w-100 mt-3" type="submit">
               Log In

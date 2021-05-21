@@ -6,7 +6,8 @@
 }
 .mainmedia{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    
 }
 .playpause{
     border: none;
@@ -14,42 +15,129 @@
     background-color: #2d3436;
     background-image: linear-gradient(305deg, #2d3436 0%, #000000 30%);
     color:cyan;
-    margin: 50px 50px;
+    height: fit-content;
+    margin-bottom: auto;
+    margin-top: auto;
 }
 .container-audio {
-    width: 66%;
-    height: 100%;
-    padding: 20px;
+    
+     width: 100%;
+    margin: 0px auto;
     border-radius: 20px;
-    margin: 0px auto ;
-    overflow: hidden;
-}
-.media{
     display: flex;
     justify-content: space-around;
-}
-.animate{
     
-    padding-top: 5%;
 }
-audio {
-  width:100%;
-}   
-audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
-    margin: 0;
+.userD{
+    margin-bottom: auto;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
 }
-.container-audio .colum1 {
+.postdata{
+    margin-bottom: auto;
+    margin-top: auto;
+    color:turquoise;
+    text-align:left;
+}
+.imageA{
+    margin-bottom: auto;
+    margin-top: auto;
+   
+    width: 50px;
+    height:50px;
+    border-radius: 50%;
+}
+
+
+.check{
+    flex-grow: 0.5;
+    display:flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    align-content: center;
+    text-align: center;
+}
+.check:hover{
+    transform: scale(1.1);
+}
+.actionMenu{
+    margin-bottom: auto;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.like-btn {
+  
+    border:none;
+  }
+  .like-btn:hover{
+    color: red;
+    -webkit-text-stroke: 1px red;
+    animation: 1s linear burst; 
+  }
+  @keyframes burst{
+    0%,10%{
+        transform: scale(1);
+        opacity: .5;
+        color:lavender;
+    }
+    45%{
+        transform: scale(.2) rotate(30deg);
+        opacity: .75;
+    }
+    50%{
+        transform: scale(2) rotate(-37.5deg);
+        opacity: 1;
+        color: red;
+        text-shadow: 2px 2px 6px rgba(235, 9, 9, 0.5);
+    }
+    90%,95%{
+        transform: scale(1) rotate(10deg);
+        text-shadow: none;
+    }
+    100% {
+        transform: rotate(-2.5deg);
+    }
+
+  }
+  .report{
+    height: fit-content;
+     border-radius:50%;
+     border: none;
+     border-left-color: red;
+     border-left-width:2px ;
+     background-color: transparent;
+     color: tomato;
+ 
+ }
+ .report:hover{
+     background-color: #3f0d12;
+ background-image :linear-gradient(315deg, #3f0d12 0%, #a71d31 74%);
+ 
+     transform: scale(1.5);
+     color:black
+ 
+ }
+ .commentclick{
+     border: none;
+     height: fit-content;
+     background-color: transparent;
+     color: tomato;
+ }
+.animate .colum1 {
     width: 3px;
     height: 20px;
     border-radius: 5px;
-    margin: 0 10px 0 0;
+    margin: 0 5px 0 0;
     display: inline-block;
     position: relative;
 }
-.container-audio .colum1:last-child {
+.animate .colum1:last-child {
     margin: 0;
 }
-.container-audio .colum1 .row {
+.animate .colum1 .row {
     width: 100%;
     height: 100%;
     border-radius: 5px;
@@ -58,11 +146,9 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
     
     bottom: 0;
 }
-.container-audio:hover{
-    transform: scale(1.1);
-}
+
     .animate .colum1 .row {
-        -webkit-animation: Rofa 10s infinite ease-in-out;
+        -webkit-animation: wave 10s infinite ease-in-out;
     animation: wave 10s infinite ease-in-out;
         animation-play-state: initial;
     }
@@ -273,51 +359,3 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
         background-color: cornflowerblue;
     }
 }
-.check{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.avatar{
-    border-radius: 50px;
-    border-width: 2px ;
-    border-color:black ;
-    height:100px;
-    width: 100px;
-    padding-right: 5%;
-}
-.like-btn {
-    margin: 50px 50px;
-    border:none;
-  }
-  .like-btn:hover{
-    color: red;
-    -webkit-text-stroke: 1px red;
-    animation: 1s linear burst; 
-  }
-  @keyframes burst{
-    0%,10%{
-        transform: scale(1);
-        opacity: .5;
-        color:lavender;
-    }
-    45%{
-        transform: scale(.2) rotate(30deg);
-        opacity: .75;
-    }
-    50%{
-        transform: scale(2) rotate(-37.5deg);
-        opacity: 1;
-        color: red;
-        text-shadow: 2px 2px 6px rgba(235, 9, 9, 0.5);
-    }
-    90%,95%{
-        transform: scale(1) rotate(10deg);
-        text-shadow: none;
-    }
-    100% {
-        transform: rotate(-2.5deg);
-    }
-
-  }

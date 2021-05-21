@@ -40,7 +40,10 @@ function PasswordReset(props) {
           <Form onSubmit={handleReset}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Control type="email" ref={emailRef} required style={{
+                backgroundColor:"transparent",
+                borderColor:"cyan"
+              }}/>
             </Form.Group>
             <Button className="w-100 mt-3" type="submit" onClick={()=>{
               if(isOpen)

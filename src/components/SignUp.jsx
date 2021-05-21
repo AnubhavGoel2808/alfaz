@@ -49,19 +49,31 @@ function SignUp(props) {
           <Form onSubmit={handleSubmit}>
           <Form.Group id="name">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" ref={nameRef} required />
+              <Form.Control type="text" ref={nameRef} required style={{
+                backgroundColor:"transparent",
+                borderColor:"cyan"
+              }}/>
             </Form.Group>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Control type="email" ref={emailRef} required style={{
+                backgroundColor:"transparent",
+                borderColor:"cyan"
+              }}/>
             </Form.Group>
             <Form.Group id="password">
               <Form.Label className="mt-2">Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Control type="password" ref={passwordRef} required style={{
+                backgroundColor:"transparent",
+                borderColor:"cyan"
+              }} />
             </Form.Group>
             <Form.Group id="password2">
               <Form.Label className="mt-2">Retype Password</Form.Label>
-              <Form.Control type="password" ref={password2Ref} required />
+              <Form.Control type="password" ref={password2Ref} placeholder="abc@example.com" required style={{
+                backgroundColor:"transparent",
+                borderColor:"cyan"
+              }}/>
             </Form.Group>
             <Button className="w-100 mt-3" type="submit">
               Sign Up

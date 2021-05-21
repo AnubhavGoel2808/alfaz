@@ -6,6 +6,8 @@ import '../style/profile.css'
 import FigureCaption from 'react-bootstrap/esm/FigureCaption';
 import Post from './post'
 import Popup from './popup'
+import CommentBox from './comments'
+import logo from '../logo.png'
 class Profile extends React.Component{
   constructor(props){
     super(props);
@@ -14,6 +16,7 @@ class Profile extends React.Component{
       isOpen:false,
       isUser:false,
       alreadyFollow:false,
+      displayName:"" ,
       audio:[],
       // audio: [{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}
       //         ,{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"},],
@@ -50,13 +53,15 @@ class Profile extends React.Component{
          })
       }
       else{
-        if(auth.currentUser==null){
-          auth.signOut().then(()=>
-          window.location.replace('/start?sessionexpire=true'))
-        }
-        const user=auth.currentUser.displayName
+        // if(auth.currentUser==null){
+        //   auth.signOut().then(()=>
+        //   window.location.replace('/start?sessionexpire=true'))
+        // }
+      //   console.log(auth.currentUser)
+      //   console.log(auth.currentUser)
+      //  let user=auth.currentUser.displayName
         
-        db.collection("user").where("name","==",user)
+        db.collection("user").where("name","==","anubhav goel")
       .get().then(querySnapshot => {
         querySnapshot.forEach((doc)=>{
           this.setState({
@@ -79,7 +84,10 @@ class Profile extends React.Component{
          .onSnapshot((querySnapshot) => {
              querySnapshot.forEach((doc) => {
                this.setState({
-                audio:[...this.state.audio, "https://www.computerhope.com/jargon/m/example.mp3"],
+                audio:[...this.state.audio, {
+                  url:doc.data().audio,
+                  des:doc.data().description
+                }],
                })
              });
          });
@@ -89,12 +97,15 @@ class Profile extends React.Component{
          else{
           
            const id=auth.uid
-           db.collection("post").where("uid", "==", " "+id)
+           db.collection("post").where("handle", "==", "sal_vat_tion")
          .onSnapshot((querySnapshot) => {
              querySnapshot.forEach((doc) => {
                console.log(doc.data())
                this.setState({
-                audio:[...this.state.audio, "https://www.computerhope.com/jargon/m/example.mp3"],
+                audio:[...this.state.audio, {
+                  url:doc.data().audio,
+                  des:doc.data().description
+                }],
                })
              });
          });
@@ -136,10 +147,15 @@ class Profile extends React.Component{
         return (
 
           <div className='main'>
-            
+            <img src={logo} style={{
+              objectFit:"cover",
+              width:"100px",
+              height:"100px"
+            }}></img>
             <section className='intro'>
             <div>
-                  <h1>{this.state.handle}</h1>
+                  
+                  <h1>@{this.state.handle}</h1>
                   
                     <button style={{
                       display:(this.state.isUser ? "none" : "inline" )
@@ -185,31 +201,33 @@ class Profile extends React.Component{
                 </ul>
                 
                 </div>
-                <div class="options">
-                 <button class='btn' style={{color:'cyan'}} onClick={this.togglePopup}>Edit</button>   
+                <div class="options" styles={{
+                 display:(this.state.isUser ? "flex" : "none" )
+                }}>
+                 <button class='btn' style={{
+                   color:'cyan',
+                 display:(this.state.isUser ? "flex" : "none" )
+                }} 
+                onClick={this.togglePopup}>Edit</button>   
                  {  
                           this.state.isOpen && <Popup content={<>
-                          <b>Edit Details</b>
-                         <form class="EditForm">
-                           <input type="text" placeholder="name"></input><br></br>
-                           <input type="text" placeholder="name"></input><br></br>
-                           <input type="text" placeholder="name"></input><br></br>
-                           <input type="text" placeholder="name"></input><br></br>
-                           <input type="submit"></input>
-                         </form>
-                         
+                          
+                           <h2>Feature loading soon...</h2>
                            </>}
       handleClose={this.togglePopup}
     />}
-             <button class='btn' onClick={this.handleSignout} style={{color:'cyan'}}>Logout</button>
+             <button class='btn' onClick={this.handleSignout} style={{
+                   color:'cyan',
+                 display:(this.state.isUser ? "flex" : "none" )
+                }} >Logout</button>
              </div>
             
              </section>
              <div >
-               {this.state.audio.map((url)=>(
+               {this.state.audio.map((data)=>(
                <div className='posts'>
                  <br></br>
-                <Post nameData={this.state.handle} audioUrl={url} callingSelf="true"></Post><br></br>
+                <Post nameData={this.state.handle} audioUrl={data.url} description={data.des} callingSelf="true"></Post><br></br>
                </div>
                ))} 
     </div>

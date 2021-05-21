@@ -38,6 +38,7 @@ function Interests(props) {
     }
     createUser(handleName,selectedItems);
     console.log(selectedItems);
+    window.open('/feeds',"_self")
   };
 
   //handle
@@ -50,7 +51,7 @@ function Interests(props) {
     } else temp.push(genre.value);
     //console.log(temp);
     setSelectedGenres(temp);
-    props.history.push('/feeds')
+    
   };
 
   const active = (genre) => {

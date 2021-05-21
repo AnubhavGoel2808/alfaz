@@ -1,5 +1,7 @@
 import React ,{Component, useEffect} from 'react'
 import Like from './common/like'
+import Popup from './popup'
+import CommentBox from './comments'
 import { Link, Redirect } from "react-router-dom";
 import '../style/POST.css';
 import Profile from './Profile'
@@ -16,8 +18,8 @@ import auth from '../firebase';
             name:"",
             src:"",
             postIndex:postnumber,
-            play:false
-
+            play:false,
+            isOpen:false
         }
        
         console.log("11");
@@ -25,6 +27,9 @@ import auth from '../firebase';
         
     }   
     audio = new Audio()
+    togglePopup = () => {
+        this.setState({isOpen: !this.state.isOpen})
+      }
     handleImageClick = (e) => {
        
        if(!this.props.callingSelf )
@@ -49,83 +54,95 @@ import auth from '../firebase';
             
             <div class="post">
             <div class="mainmedia">
-                <button class="playpause" onClick={this.togglePlay}>{this.state.play ? 'sound off' : 'sound on'}</button>
-            <div class="container-audio" onClick={this.handleImageClick}>
-            <div class="media">
-            <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg" className="avatar" 
-                
-            >
-             </img>
-            <div class="check">
            
-            <p>{this.props.nameData}</p>
-            <p>this is sample </p>
-             </div>
-           {/* // <audio src="https://www.computerhope.com/jargon/m/example.mp3" id="player" loop controls ></audio> */}
-            
-                <div class="animate">
-                <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        <div class="colum1">
-            <div class="row"></div>
-        </div>
-        </div>
-        
-           </div>
-            
-        </div>
+            <div class="container-audio" >
+            <button class="playpause" onClick={this.togglePlay}>{this.state.play ? 'sound' : 'mute'}</button>
+                    <div class="userD" onClick={this.handleImageClick}>
+                        <img src="https://static3.bigstockphoto.com/9/1/3/large1500/31903202.jpg" class="imageA" >
+                        </img>
+                        <p class="postdata">{this.props.nameData}</p>
+                    </div>
+                    <div class="check">
+                    <p >{this.props.description} </p>
+                  
+                    <div class="animate">
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                        <div class="colum1">
+                            <div class="row"></div>
+                        </div>
+                    </div>
+                
+                    </div>
+               <div class="actionMenu">
         <Like></Like>
+        <button class="commentclick" onClick={()=>{
+            alert("reported we will see!!")
+        }}  onClick={this.togglePopup}>COMMENT</button>
+        {  
+                          this.state.isOpen && <Popup content={<>
+                          
+                           <CommentBox></CommentBox>
+                           </>}
+      handleClose={this.togglePopup}
+    />}
+       
+       </div>
+      
+        <button class="report" onClick={()=>{
+            alert("reported we will see!!")
+        }}>   !   </button>
         
-        
+     </div>
         {/* <button class="like-btn"> Like </button> */}
         </div>
         </div>
