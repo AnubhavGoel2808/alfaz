@@ -5,7 +5,7 @@ class CommentBox extends Component {
     super(props);
     this.state = {data: props.data};
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+
   }
  
   handleCommentSubmit(comment) {
