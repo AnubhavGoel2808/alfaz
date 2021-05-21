@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactAudioPlayer from 'react-audio-player';
 import firebase from "firebase";
-import { auth ,db } from "../firebase";
+import auth,{ db } from "../firebase";
 import '../style/profile.css'
 import FigureCaption from 'react-bootstrap/esm/FigureCaption';
 import Post from './post'
@@ -20,32 +20,62 @@ class Profile extends React.Component{
       userDetails: {
           image:'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png'
          },
-      users:[]
+      users:[],
+
     }
-   
-   
+    console.log(auth)
   } 
  
     
-     componentWillMount() {
-      
-      db.collection("user").where("name","==","Moksh")
+     componentDidMount() {
+     
+      var url_string = window.location;
+      var url = new URL(url_string);
+      var name = url.searchParams.get("name");
+      if(name!=null){
+      db.collection("user").where("handle","==","sal_vat_tion")
       .get().then(querySnapshot => {
         querySnapshot.forEach((doc)=>{
           this.setState({
             name: doc.data().name,
             handle:doc.data().handle,
             follower:doc.data().followers_count,
-            following:doc.data().following_count
+            following:doc.data().following_count,
+            image: "https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg",
           })
         })
         
         console.log("4");
        
          })
+      }
+      else{
+        if(auth.currentUser==null){
+          auth.signOut().then(()=>
+          window.location.replace('/start?sessionexpire=true'))
+        }
+        const user=auth.currentUser.displayName
+        
+        db.collection("user").where("name","==",user)
+      .get().then(querySnapshot => {
+        querySnapshot.forEach((doc)=>{
+          this.setState({
+            name: doc.data().name,
+            handle:doc.data().handle,
+            follower:doc.data().followers_count,
+            following:doc.data().following_count,
+            image: "https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg",
+          })
+        })
+        
+        console.log("4");
+       
+         })
+      }
          const temp = [];
-         //console.log(temp);         
-         db.collection("post").where("handle", "==", "sal_vat_ion")
+         //console.log(temp);  
+         if(name!=null){
+         db.collection("post").where("handle", "==", name)
          .onSnapshot((querySnapshot) => {
              querySnapshot.forEach((doc) => {
                this.setState({
@@ -55,16 +85,30 @@ class Profile extends React.Component{
          });
          
          console.log(temp);
-         var url_string = window.location;
-         var url = new URL(url_string);
-         var name = url.searchParams.get("name");
+         }
+         else{
+          
+           const id=auth.uid
+           db.collection("post").where("uid", "==", " "+id)
+         .onSnapshot((querySnapshot) => {
+             querySnapshot.forEach((doc) => {
+               console.log(doc.data())
+               this.setState({
+                audio:[...this.state.audio, "https://www.computerhope.com/jargon/m/example.mp3"],
+               })
+             });
+         });
+         }
          
          if(name != null ){
+         // console.log(auth.currentUser.displayName)
+          
             this.setState({
               isUser:false
             })
          }
          else{
+          
           this.setState({
             isUser:true
           })
@@ -75,7 +119,7 @@ class Profile extends React.Component{
         try {
           auth
           .signOut()
-          .then(() => window.location.replace("./login-form.jsx"));
+          .then(() => window.location.replace("./start"));
         } catch (error) {
           console.log(error)
         }
@@ -85,7 +129,7 @@ class Profile extends React.Component{
       }
 
     render() {
-      console.log(this.state)
+     
         // if(this.state.name== undefined || this.state.audio == null )
         //       return null
         
@@ -112,7 +156,7 @@ class Profile extends React.Component{
 
             <figure>
               
-            <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg" className='avatar' alt={this.state.userDetails.name} >
+            <img src={this.state.image} className='avatar' alt={this.state.userDetails.name} >
              </img>
              <figcaption className="figure-caption text-center" class="caption">
                 {this.state.name}
@@ -143,7 +187,8 @@ class Profile extends React.Component{
                 </div>
                 <div class="options">
                  <button class='btn' style={{color:'cyan'}} onClick={this.togglePopup}>Edit</button>   
-                 {this.state.isOpen && <Popup content={<>
+                 {  
+                          this.state.isOpen && <Popup content={<>
                           <b>Edit Details</b>
                          <form class="EditForm">
                            <input type="text" placeholder="name"></input><br></br>
@@ -164,7 +209,7 @@ class Profile extends React.Component{
                {this.state.audio.map((url)=>(
                <div className='posts'>
                  <br></br>
-                <Post nameData={this.state.name} audioUrl={url} callingSelf="true"></Post><br></br>
+                <Post nameData={this.state.handle} audioUrl={url} callingSelf="true"></Post><br></br>
                </div>
                ))} 
     </div>

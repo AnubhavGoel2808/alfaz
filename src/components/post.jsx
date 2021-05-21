@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import '../style/POST.css';
 import Profile from './Profile'
 import { useHistory } from "react-router-dom";
+import auth from '../firebase';
  class Post extends Component{
     constructor(props){
         super(props);
@@ -26,7 +27,7 @@ import { useHistory } from "react-router-dom";
     audio = new Audio()
     handleImageClick = (e) => {
        
-       if(!this.props.callingSelf)
+       if(!this.props.callingSelf )
        window.open("/profile?name="+this.props.nameData,"_self"); 
         
       }

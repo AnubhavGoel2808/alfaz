@@ -7,7 +7,7 @@ function SignUp(props) {
   const emailRef = useRef();
   const passwordRef = useRef();
   const password2Ref = useRef();
-
+  const nameRef=useRef();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) props.history.replace("/userhandle");
@@ -19,14 +19,14 @@ function SignUp(props) {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const password2 = password2Ref.current.value;
-
+    const name=nameRef.current.value;
     if (password !== password2) {
       console.log("Typed Passwords Doesnot Match");
       return;
     }
 
     auth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password,name)
       .then((user) => {
         console.log(user);
       })
@@ -47,6 +47,10 @@ function SignUp(props) {
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
           <Form onSubmit={handleSubmit}>
+          <Form.Group id="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" ref={nameRef} required />
+            </Form.Group>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required />

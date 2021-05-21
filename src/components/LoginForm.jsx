@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import firebase from "firebase";
-import { auth } from "../firebase";
+import auth,{ db } from "../firebase";
 import { Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MyToast from "./common/MyToast";
@@ -13,7 +13,10 @@ function LoginForm(props) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       console.log("ASC", user);
       if (user) {
-        props.history.push("/userhandle");
+        if(user.metadata.b-user.metadata.a>=50)
+          props.history.push('/feeds')
+        else
+          props.history.push('/userhandle')
       }
     });
     return unsubscribe;
@@ -43,6 +46,7 @@ function LoginForm(props) {
     auth.signInWithPopup(provider).catch((e) => {
       console.error(e);
     });
+   
   };
 
   //facebook login
@@ -51,6 +55,7 @@ function LoginForm(props) {
     auth.signInWithPopup(provider).catch((e) => {
       console.error(e);
     });
+
   };
 
   return (

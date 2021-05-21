@@ -25,6 +25,7 @@ export function createUser(userHandle, selectedInterests) {
   const { creationTime, lastSignInTime } = auth.currentUser.metadata;
 
   const userDoc = {
+    
     created_at: new Date(creationTime),
     last_sign_in: new Date(lastSignInTime),
     email: email,
@@ -45,9 +46,10 @@ export function createUser(userHandle, selectedInterests) {
   const batch = db.batch();
 
   const uRef = db.collection("user").doc(uid);
+  const hRef = db.collectionGroup("user").doc(userHandle);
   console.log(uRef);
   batch.set(uRef, userDoc);
-
+batch.set(hRef,{uid:uid})
   console.log(batch);
   batch.commit();
 }

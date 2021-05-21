@@ -1,8 +1,17 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import {Redirect} from 'react-router-dom';
 import logo from '../logo.png'
 import '../style/start.css'
-const startScreen = (props) => {
+function StartScreen (props)  {
+    useEffect(() => {
+        const url_string = window.location;
+      const url = new URL(url_string);
+      const name = url.searchParams.get("sessionexpire");
+        if(name!=null)
+        alert("session expire please login in again")
+      }, []);
+
+
     return (
         <div class="splash">            
             <img src={logo} alt="logo" class="logo"></img>
@@ -14,4 +23,4 @@ const startScreen = (props) => {
     )
 }
 
-export default startScreen
+export default StartScreen

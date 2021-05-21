@@ -50,6 +50,7 @@ function Interests(props) {
     } else temp.push(genre.value);
     //console.log(temp);
     setSelectedGenres(temp);
+    props.history.push('/feeds')
   };
 
   const active = (genre) => {
@@ -88,7 +89,7 @@ function Interests(props) {
             <MyToast></MyToast>
           </Container>
           <div className="align-middle">
-        <Button onClick={handleSubmit}>Submit {handleName}</Button>
+        <Button onClick={handleSubmit}>Let's move to your feed,{handleName}</Button>
       </div>
         </Card.Body>
         
