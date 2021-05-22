@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import Post from './post'
 import {db} from '../firebase'
 import { Component } from "react";
+import Suggestion from "./suggestions";
 class Feeds extends Component {
   constructor(props){
     super(props);
@@ -37,6 +38,7 @@ class Feeds extends Component {
         paddingRight:"10%"
       }}>
       <AddPost ></AddPost>
+      <Suggestion></Suggestion>
       {this.state.audio.map((data)=>(
                <div className='posts'>
                  <br></br>
