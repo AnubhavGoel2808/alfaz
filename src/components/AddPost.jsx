@@ -4,12 +4,14 @@ import { Card } from "react-bootstrap";
 import { addPost } from "../utils/postutils";
 import logo from '../logo.png'
 import Post from './post'
+import auth from "../firebase";
 function AddPost(props) {
   const [captured, setCaptured] = useState(false);
   const [recording, setRecording] = useState(false);
   const [url, setUrl] = useState("");
   const descRef = useRef();
-
+  window.userDoc=auth.currentUser
+  console.log(window.userDoc)
   const allGenre = [
     "Story Telling",
     "AMSR",
@@ -41,13 +43,26 @@ function AddPost(props) {
   };
 
   const handleAddPost = (e) => {
-    e.preventDefault();
-    console.log(e.target);
-
-    const desc = descRef.current.value;
-    const handle = props.handle && "some random handle";
-    const genreList = fetchPostGenreList();
-    addPost(url, desc, genreList, handle);
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        e.preventDefault();
+        console.log(e.target);
+    
+        const desc = descRef.current.value;
+        const handle = props.handle && "some random handle";
+        const genreList = fetchPostGenreList();
+        addPost(url, desc, genreList, handle,auth.currentUser.photoURL);
+      } else {
+        e.preventDefault();
+        console.log(e.target);
+    
+        const desc = descRef.current.value;
+        const handle = props.handle && "some random handle";
+        const genreList = fetchPostGenreList();
+        addPost(url, desc, genreList, handle);
+      }
+    });
+   
   };
   const handleRecord = () => {
     console.log("mic clicked", recording);

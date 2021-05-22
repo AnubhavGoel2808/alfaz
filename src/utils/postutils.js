@@ -4,7 +4,8 @@ export async function addPost(
   url,
   description,
   genreList,
-  userHandle = "sal_vat_ion"
+  userHandle = "hk",
+  imagea
 ) {
   const { uid } = auth;
   const file = window.file;
@@ -22,6 +23,7 @@ export async function addPost(
         likes: 0,
         comments_count: 0,
         handle: userHandle,
+        image: (imagea),
       })
       .then(() => {
         console.log("POST ADDED");

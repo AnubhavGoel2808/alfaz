@@ -20,7 +20,7 @@ class Suggestion extends Component{
           handle:doc.data().handle,
           follower:doc.data().followers_count,
           following:doc.data().following_count,
-          image: "https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg",
+          image: doc.data().photoUrl 
         }]})
       })
      })

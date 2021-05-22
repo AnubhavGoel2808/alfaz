@@ -11,7 +11,7 @@ function Userhandle(props) {
   const [disable,setDisable]=useState(true);
   const [handle,setHandle]=useState(undefined);
   const handleRef = useRef();
-  const url = "https://static3.bigstockphoto.com/9/1/3/large1500/31903202.jpg";
+  const url = auth.currentUser?auth.currentUser.photoURL:"https://static3.bigstockphoto.com/9/1/3/large1500/31903202.jpg";
   const checkAvailability = (e) => {
     console.log(e.target.value);
   };

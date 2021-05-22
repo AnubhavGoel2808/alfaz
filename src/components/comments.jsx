@@ -7,7 +7,7 @@ class CommentBox extends Component {
     this.state = {
       showComments: false,
       comments: [
-        // {id: 1, author: "landiggity", body: "This is my first comment on this forum so don't be a dick"},
+         {id: 1, author: "etherious_aman", body: "soothing"},
         // {id: 2, author: "scarlett-jo", body: "That's a mighty fine comment you've got there my good looking fellow..."},
         // {id: 3, author: "rosco", body: "What is the meaning of all of this 'React' mumbo-jumbo?"}
       ]
@@ -34,7 +34,7 @@ class CommentBox extends Component {
         <Comment 
           author={comment.author} 
           body={comment.body} 
-          key={comment.id} />
+         />
       ); 
     });
   }

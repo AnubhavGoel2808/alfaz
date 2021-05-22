@@ -38,9 +38,11 @@ function Interests(props) {
     }
     createUser(handleName,selectedItems);
     console.log(selectedItems);
-    window.open('/feeds',"_self")
+    
   };
-
+const handleProceed=()=>{
+window.open('/feeds?image='+auth.currentUser.photoURL,"_self")
+}
   //handle
   const handleInterestClick = (genre) => {
     let temp = [...selectedGenres];
@@ -90,13 +92,14 @@ function Interests(props) {
             <MyToast></MyToast>
           </Container>
           <div className="align-middle">
-        <Button onClick={handleSubmit}>Let's move to your feed,{handleName}</Button>
+        <Button onClick={handleSubmit}>save</Button>
+        
       </div>
         </Card.Body>
         
         
       </Card>
-      
+      <Button onClick={handleProceed}>proceed,{handleName}</Button>
     </div>
   );
 }

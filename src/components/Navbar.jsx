@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../resources/user.png";
 import logo from '../logo.png'
+import Notification from './notification'
+import auth from "../firebase";
 function Navbar(props) {
   return (
     <nav class="navbar navbar-expand-lg ">
@@ -33,12 +35,14 @@ function Navbar(props) {
       </form>
       <div
         style={{
+          display:"flex",
           marginLeft: "5px",
           marginRight: "5px",
         }}
       >
+     
         <img
-          src={"https://static3.bigstockphoto.com/9/1/3/large1500/31903202.jpg"}
+          src={auth.currentUser?auth.currentUser.photoURL:"https://static3.bigstockphoto.com/9/1/3/large1500/31903202.jpg"}
           style={{
             width: "35px",
             height: "35px",

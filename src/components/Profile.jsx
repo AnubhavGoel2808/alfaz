@@ -20,13 +20,11 @@ class Profile extends React.Component{
       audio:[],
       // audio: [{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"}
       //         ,{ src:"https://www.computerhope.com/jargon/m/example.mp3", description:"this is a smaple audio"},],
-      userDetails: {
-          image:'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png'
-         },
+     
       users:[],
 
     }
-    console.log(auth)
+    console.log(window.userDoc)
   } 
  
     
@@ -36,7 +34,7 @@ class Profile extends React.Component{
       var url = new URL(url_string);
       var name = url.searchParams.get("name");
       if(name!=null){
-      db.collection("user").where("handle","==","sal_vat_tion")
+      db.collection("user").where("handle","==",name)
       .get().then(querySnapshot => {
         querySnapshot.forEach((doc)=>{
           this.setState({
@@ -44,7 +42,7 @@ class Profile extends React.Component{
             handle:doc.data().handle,
             follower:doc.data().followers_count,
             following:doc.data().following_count,
-            image: "https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg",
+            image:doc.data().photoUrl
           })
         })
         
@@ -60,8 +58,17 @@ class Profile extends React.Component{
       //   console.log(auth.currentUser)
       //   console.log(auth.currentUser)
       //  let user=auth.currentUser.displayName
+      let userName="anubhav goel"
+      firebase.auth().onAuthStateChanged((user)=> {
+        if (user) {
+          userName=user.displayName
+        } else {
+          // No user is signed in.
+        }
+      }
+      )
         
-        db.collection("user").where("name","==","anubhav goel")
+        db.collection("user").where("name","==",userName)
       .get().then(querySnapshot => {
         querySnapshot.forEach((doc)=>{
           this.setState({
@@ -69,7 +76,7 @@ class Profile extends React.Component{
             handle:doc.data().handle,
             follower:doc.data().followers_count,
             following:doc.data().following_count,
-            image: "https://res.cloudinary.com/practicaldev/image/fetch/s--skK8N6A8--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/511082/2860c4df-a0f4-4f4f-acb2-5e8bdb3bc673.jpg",
+            image: doc.data().photoUrl 
           })
         })
         
@@ -97,14 +104,16 @@ class Profile extends React.Component{
          else{
           
            const id=auth.uid
-           db.collection("post").where("handle", "==", "sal_vat_tion")
+           db.collection("post").where("handle", "==", "sal_vat_ion")
          .onSnapshot((querySnapshot) => {
              querySnapshot.forEach((doc) => {
                console.log(doc.data())
                this.setState({
+                 
                 audio:[...this.state.audio, {
                   url:doc.data().audio,
-                  des:doc.data().description
+                  des:doc.data().description,
+                  postImage:doc.data().image,
                 }],
                })
              });
@@ -143,7 +152,7 @@ class Profile extends React.Component{
      
         // if(this.state.name== undefined || this.state.audio == null )
         //       return null
-        
+        console.log(this.state)
         return (
 
           <div className='main'>
@@ -172,7 +181,7 @@ class Profile extends React.Component{
 
             <figure>
               
-            <img src={this.state.image} className='avatar' alt={this.state.userDetails.name} >
+            <img src={this.state.image} className='avatar' alt={this.state.image} >
              </img>
              <figcaption className="figure-caption text-center" class="caption">
                 {this.state.name}
@@ -227,7 +236,7 @@ class Profile extends React.Component{
                {this.state.audio.map((data)=>(
                <div className='posts'>
                  <br></br>
-                <Post nameData={this.state.handle} audioUrl={data.url} description={data.des} callingSelf="true"></Post><br></br>
+                <Post nameData={this.state.handle} audioUrl={data.url} description={data.des} image={data.postImage} callingSelf="true"></Post><br></br>
                </div>
                ))} 
     </div>

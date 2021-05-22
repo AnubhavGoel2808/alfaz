@@ -38,7 +38,7 @@ export function createUser(userHandle, selectedInterests) {
     interests: selectedInterests,
     photoUrl: photoURL,
   };
-
+window.userDoc=userDoc
   console.log(userDoc);
 
   //..............

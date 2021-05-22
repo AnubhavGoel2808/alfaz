@@ -58,7 +58,7 @@ import auth from '../firebase';
             <div class="container-audio" >
             <button class="playpause" onClick={this.togglePlay}>{this.state.play ? 'sound' : 'mute'}</button>
                     <div class="userD" onClick={this.handleImageClick}>
-                        <img src="https://static3.bigstockphoto.com/9/1/3/large1500/31903202.jpg" class="imageA" >
+                        <img src={this.props.image} class="imageA" >
                         </img>
                         <p class="postdata">{this.props.nameData}</p>
                     </div>
